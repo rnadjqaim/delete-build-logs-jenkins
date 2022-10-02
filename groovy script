@@ -1,0 +1,7 @@
+import hudson.model.*;
+import jenkins.model.*;
+def days = 3
+Jenkins.instance.getAllItems(Job.class).each{ 
+  println "deleting logs for " + it.name + " - " + it.class
+  it.getBuilds().byTimestamp(1, System.currentTimeMillis() - (1000L * 60 * 60 * 24 * days)).each { it.getLogFile().delete(); it.getLogFile().createNewFile() }
+}
